@@ -26,9 +26,11 @@
 
 
 
+
         function get_color(n){
+            let i = Math.floor(n / 100);
         var gradient = ["#1C92D2", "#3AA1D8", "#59B0DE", "#77BFE4", "#96CEEB", "#B4DDF1", "#D3ECF7", "#F2FCFE", "#DCEBFA", "#C6DAF6", "#B1C9F3", "#9BB8EF", "#86A7EC", "#7096E8", "#5B86E5"]
-          return (gradient[n % gradient.length])
+          return (gradient[i % gradient.length])
         }
 
 
@@ -39,32 +41,42 @@
           this.y = y;
         }
 
-
-        function vector(a, b) {
-            this.x = a.x - b.x;
-            this.y = a.y - b.y;
-        }
-
-
           function draw_pixel(p, color){
               context.fillStyle = color;
               context.fillRect( p.x, p.y, 1, 1);
           }
 
 
-          function get_rotated(p, rot){
-
-          }
 
           var sym = 10;
           var angle = (2 * Math.PI) / sym;
+          var old = new Array(sym + 1);
+          var drawn = 0;
+
+          function draw_line(a, b, color){
+            context.beginPath()
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.strokeStyle = color;
+            context.stroke();
+          }
 
           function draw_sym(p){
+
+              drawn++;
               for (let i = 1; i <= sym; i++){
+
                    let relative  = new Point(p.x - center.x, p.y - center.y);
                    let sym = new Point(relative.x * Math.cos(angle * i) - relative.y * Math.sin(angle * i), relative.y * Math.cos(angle * i) + relative.x * Math.sin(angle * i))
-                   draw_pixel(new Point(sym.x + center.x, sym.y + center.y), 'green')
+
+                   let new_point = new Point(sym.x + center.x, sym.y + center.y);
+                   draw_pixel(new_point, get_color(drawn))
+                 if (drawn > 1){
+                    draw_line(old[i], new Point(sym.x + center.x, sym.y + center.y), get_color(drawn))
+                 }
+                   old[i] = new Point(sym.x + center.x, sym.y + center.y);
               }
+              console.log(old)
           }
 
 
