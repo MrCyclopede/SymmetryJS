@@ -22,7 +22,7 @@
         context = canvas.getContext("2d");
 
         function get_color(n){
-            let i = Math.floor(n / 100);
+            let i = Math.floor(n / 10);
     var gradient = ["#0081EB", "#0A8FCF", "#159EB3", "#20AD97", "#2BBB7B", "#36CA5F", "#41D943", "#4CE827", "#65E721", "#7FE71B", "#98E716", "#B2E710", "#CBE70B", "#E5E705", "#FFE700", "#FED800", "#FDC900", "#FCBB00", "#FCAC00", "#FB9E00", "#FA8F00", "#FA8100", "#F97412", "#F86724", "#F85A36", "#F74E49", "#F7415B", "#F6346D", "#F62880", "#EB2788", "#E02790", "#D52799", "#CA26A1", "#BF26AA", "#B426B2", "#A926BB", "#9526B9", "#8226B7", "#6F26B5", "#5C26B3", "#4926B1", "#3626AF", "#2327AD", "#1E33B5", "#1940BE", "#144DC7", "#0F5AD0", "#0A67D9", "#0574E2", "#0081EB"]
           return (gradient[i % gradient.length])
         }
