@@ -21,15 +21,9 @@
         canvas.height = window.innerHeight;
         context = canvas.getContext("2d");
 
-
-
-
-
-
-
         function get_color(n){
             let i = Math.floor(n / 100);
-        var gradient = ["#1C92D2", "#3AA1D8", "#59B0DE", "#77BFE4", "#96CEEB", "#B4DDF1", "#D3ECF7", "#F2FCFE", "#DCEBFA", "#C6DAF6", "#B1C9F3", "#9BB8EF", "#86A7EC", "#7096E8", "#5B86E5"]
+        var gradient = ["#833AB4", "#AB3081", "#D4264F", "#FD1D1D", "#FC4E2A", "#FC7F37", "#FCB045", "#D3886A", "#AB618F", "#833AB4"]
           return (gradient[i % gradient.length])
         }
 
@@ -48,9 +42,9 @@
 
 
 
-          var sym = 10;
+          var sym = 4;
           var angle = (2 * Math.PI) / sym;
-          var old = new Array(sym + 1);
+          var old = new Array(100);
           var drawn = 0;
 
           function draw_line(a, b, color){
@@ -70,7 +64,7 @@
                    let sym = new Point(relative.x * Math.cos(angle * i) - relative.y * Math.sin(angle * i), relative.y * Math.cos(angle * i) + relative.x * Math.sin(angle * i))
 
                    let new_point = new Point(sym.x + center.x, sym.y + center.y);
-                   draw_pixel(new_point, get_color(drawn))
+                 //  draw_pixel(new_point, get_color(drawn))
                  if (drawn > 1){
                     draw_line(old[i], new Point(sym.x + center.x, sym.y + center.y), get_color(drawn))
                  }
@@ -80,15 +74,8 @@
           }
 
 
-
-
-
-
-
-
           context.fillStyle = '000000';
           context.fillRect( 0, 0, canvas.width, canvas.height);
-
 
           var cur_color = 'red';
           var center = new Point(Math.floor(canvas.width / 2),Math.floor(canvas.height / 2));
@@ -98,21 +85,26 @@
               draw_sym(new Point(event.clientX, event.clientY))
           }, true);
 
+          document.addEventListener('click', function(event){
+
+              context.fillStyle = 'black';
+              context.fillRect( 0, 0, canvas.width, canvas.height);
+          }, true);
 
           document.addEventListener('keydown', function(event){
-            if (event.keyCode == 37 && tree.ratio < 1) {
-                tree.ratio += 0.01
+            if (event.keyCode == 38) {
+                sym++;
+                angle = (2 * Math.PI) / sym;
+                old = new Array(100)
+                drawn = 0;
 
-            }
-            else if (event.keyCode == 39) {
-                      tree.ratio -= 0.01
 
-            }
-            else if (event.keyCode == 38) {
-                  tree.depth++;
             }
             else if (event.keyCode == 40 && tree.depth > 1) {
-                tree.depth--;
+                sym--;
+                angle = (2 * Math.PI) / sym;
+                old = new Array(100)
+                drawn = 0;
             }
 
           }, true);
