@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Symmetry</title>
+    <style></style>
+</head>
+
+<body style="overflow:hidden; margin:0">
+
+    <canvas id="gameCanvas" style="border:10px;  solid #FFF555; " ></canvas>
+    <script>
+        // declare variables
+        const FPS = 30;
+        var canvas, context;
+
+        // load canvas
+        canvas = document.getElementById("gameCanvas");
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+        context = canvas.getContext("2d");
+
+
+
+
+
+
+        function get_color(n){
+        var gradient = ["#1C92D2", "#3AA1D8", "#59B0DE", "#77BFE4", "#96CEEB", "#B4DDF1", "#D3ECF7", "#F2FCFE", "#DCEBFA", "#C6DAF6", "#B1C9F3", "#9BB8EF", "#86A7EC", "#7096E8", "#5B86E5"]
+          return (gradient[n % gradient.length])
+        }
+
+
+
+
+        function Point(x, y) {
+          this.x = x;
+          this.y = y;
+        }
+
+
+        function vector(a, b) {
+            this.x = a.x - b.x;
+            this.y = a.y - b.y;
+        }
+
+
+          function draw_pixel(p, color){
+              context.fillStyle = color;
+              context.fillRect( p.x, p.y, 1, 1);
+          }
+
+
+          function get_rotated(p, rot){
+
+          }
+
+          var sym = 10;
+          var angle = (2 * Math.PI) / sym;
+
+          function draw_sym(p){
+              for (let i = 1; i <= sym; i++){
+                   let relative  = new Point(p.x - center.x, p.y - center.y);
+                   let sym = new Point(relative.x * Math.cos(angle * i) - relative.y * Math.sin(angle * i), relative.y * Math.cos(angle * i) + relative.x * Math.sin(angle * i))
+                   draw_pixel(new Point(sym.x + center.x, sym.y + center.y), 'green')
+              }
+          }
+
+
+
+
+
+
+
+
+          context.fillStyle = '000000';
+          context.fillRect( 0, 0, canvas.width, canvas.height);
+
+
+          var cur_color = 'red';
+          var center = new Point(Math.floor(canvas.width / 2),Math.floor(canvas.height / 2));
+
+
+          document.addEventListener('mousemove', function(event){
+              draw_sym(new Point(event.clientX, event.clientY))
+          }, true);
+
+
+          document.addEventListener('keydown', function(event){
+            if (event.keyCode == 37 && tree.ratio < 1) {
+                tree.ratio += 0.01
+
+            }
+            else if (event.keyCode == 39) {
+                      tree.ratio -= 0.01
+
+            }
+            else if (event.keyCode == 38) {
+                  tree.depth++;
+            }
+            else if (event.keyCode == 40 && tree.depth > 1) {
+                tree.depth--;
+            }
+
+          }, true);
+
+
+
+    </script>
+</body>
+
+</html>
