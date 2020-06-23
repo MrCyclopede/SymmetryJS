@@ -48,7 +48,7 @@
           var drawn = 0;
 
           function draw_line(a, b, color){
-            //context.beginPath()
+            context.beginPath()
             context.moveTo(a.x, a.y);
             context.lineTo(b.x, b.y);
             context.strokeStyle = color;
@@ -62,11 +62,13 @@
 
                    let relative  = new Point(p.x - center.x, p.y - center.y);
                    let sym = new Point(relative.x * Math.cos(angle * i) - relative.y * Math.sin(angle * i), relative.y * Math.cos(angle * i) + relative.x * Math.sin(angle * i))
+                   let sym2 = new Point(relative.x * Math.cos(angle *(i - 1)) - relative.y * Math.sin(angle * (i - 1)), relative.y * Math.cos(angle *(i - 1)) + relative.x * Math.sin(angle *(i - 1)))
 
                    let new_point = new Point(sym.x + center.x, sym.y + center.y);
                  //  draw_pixel(new_point, get_color(drawn))
                  if (drawn > 1){
                     draw_line(old[i], new Point(sym.x + center.x, sym.y + center.y), get_color(drawn))
+                    draw_line(old[i], new Point(sym2.x + center.x, sym2.y + center.y), get_color(drawn))
                  }
                    old[i] = new Point(sym.x + center.x, sym.y + center.y);
               }
